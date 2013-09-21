@@ -34,6 +34,7 @@ func TestSetProcTitle(t *testing.T) {
 
   out, err := exec.Command("/bin/ps", "a").Output()
   if err != nil {
+    // No ps available on this platform.
     t.SkipNow()
   } else if !strings.Contains(string(out), title) {
     t.FailNow()
