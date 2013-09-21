@@ -223,12 +223,14 @@ static void spt_init(int argc, char *arg0) {
 		end = argv[i] + strlen(argv[i]) + 1;
 	}
 
-	for (i = 0; envp[i]; i++) {
+	/* Don't use environ for our buffer.
+   * Doing this will make go's exec.Command() stop working.
+  for (i = 0; envp[i]; i++) {
 		if (envp[i] < end)
 			continue;
 
 		end = envp[i] + strlen(envp[i]) + 1;
-	}
+	}*/
 
 	if (!(SPT.arg0 = strdup(argv[0])))
 		goto syerr;
@@ -298,7 +300,7 @@ static void setproctitle(const char *fmt, ...) {
 		SPT.reset = 1;
 	} else {
 		memset(SPT.base, 0, spt_min(sizeof buf, SPT.end - SPT.base));
-	}
+  }
 
 	len = spt_min(len, spt_min(sizeof buf, SPT.end - SPT.base) - 1);
 	memcpy(SPT.base, buf, len);
