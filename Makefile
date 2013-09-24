@@ -1,12 +1,6 @@
 
-all: test
+all:
 
-
-clean:
-	GOPATH=`readlink -f deps` ./go/bin/go clean
-
-distclean: clean
-	rm -rf deps/pkg/*
 
 go/bin/go:
 	wget "http://go.googlecode.com/files/go1.1.2.src.tar.gz"
@@ -17,9 +11,9 @@ go/bin/go:
 deps: go/bin/go
 
 
-test:
+test: deps
 	GOPATH=`readlink -f deps` ./go/bin/go test
 
 
-.PHONY: all clean distclean deps test
+.PHONY: all test
 

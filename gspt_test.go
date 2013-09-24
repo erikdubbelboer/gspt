@@ -28,6 +28,10 @@ func randomMD5() string {
 
 
 func TestSetProcTitle(t *testing.T) {
+  if HaveSetProcTitle == HaveNone {
+    t.SkipNow()
+  }
+
   title := randomMD5()
 
   SetProcTitle(title)
