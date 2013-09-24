@@ -13,6 +13,8 @@ import (
 )
 
 func main() {
+  fmt.Println("HaveSetProcTitle:", gspt.HaveSetProcTitle)
+
   gspt.SetProcTitle("some title")
 
   fmt.Println("The title has been set, 'ps a' now shows:")
@@ -23,6 +25,7 @@ func main() {
     return
   }
   lines := strings.Split(string(out), "\n")
+  fmt.Println(lines[0])
   for _, line := range(lines) {
     if strings.Contains(line, "some title") {
       fmt.Println(line)
