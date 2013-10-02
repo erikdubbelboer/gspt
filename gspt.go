@@ -1,4 +1,3 @@
-
 package gspt
 
 /*
@@ -17,9 +16,9 @@ import (
 
 const (
   // These values must match the return values for spt_init1() used in C.
-  HaveNone        = iota // 0
-  HaveNative      = iota // 1
-  HaveReplacement = iota // 2
+  HaveNone        = 0
+  HaveNative      = 1
+  HaveReplacement = 2
 )
 
 
