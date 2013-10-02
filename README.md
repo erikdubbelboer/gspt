@@ -25,3 +25,4 @@ import "github.com/ErikDubbelboer/gspt"
 gspt.SetProcTitle("some title")
 ```
 
+Please check the [documentation](http://godoc.org/github.com/ErikDubbelboer/gspt) for more details.
