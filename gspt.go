@@ -51,6 +51,9 @@ func init() {
     defer C.free(unsafe.Pointer(arg0))
 
     C.spt_init2(argc, arg0)
+
+    // Restore the original title.
+    SetProcTitle(os.Args[0])
   }
 }
 
