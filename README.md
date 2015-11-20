@@ -3,7 +3,7 @@ gspt
 
 `setproctitle()` package for Go.
 
-[![Build Status](https://travis-ci.org/ErikDubbelboer/gspt.png?branch=master)](https://travis-ci.org/ErikDubbelboer/gspt)
+[![Build Status](https://travis-ci.org/erikdubbelboer/gspt.png?branch=master)](https://travis-ci.org/erikdubbelboer/gspt)
 
 --------------------------------
 
