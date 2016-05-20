@@ -36,7 +36,7 @@ func TestSetProcTitle(t *testing.T) {
 
   SetProcTitle(title)
 
-  out, err := exec.Command("/bin/ps", "a").Output()
+  out, err := exec.Command("/bin/ps", "ax").Output()
   if err != nil {
     // No ps available on this platform.
     t.SkipNow()
