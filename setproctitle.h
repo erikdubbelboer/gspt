@@ -74,6 +74,8 @@ static struct {
 
   // Pointer to original nul character within base.
   char *nul;
+
+  int reset;
 } SPT;
 
 
@@ -217,6 +219,13 @@ static void setproctitle(const char *fmt, ...) {
 
   if (len <= 0) {
     return;
+  }
+
+  if (!SPT.reset) {
+    memset(SPT.base, 0, SPT.end - SPT.base);
+    SPT.reset = 1;
+  } else {
+    memset(SPT.base, 0, spt_min(sizeof buf, SPT.end - SPT.base));
   }
 
   len = spt_min(len, spt_min(sizeof buf, SPT.end - SPT.base) - 1);
