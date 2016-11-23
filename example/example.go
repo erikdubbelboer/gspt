@@ -9,7 +9,7 @@ import (
   "os"
   "os/exec"
 
-  "github.com/ErikDubbelboer/gspt"
+  "github.com/erikdubbelboer/gspt"
 )
 
 func main() {
