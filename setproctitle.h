@@ -31,7 +31,7 @@
 #endif
 
 #include <stddef.h> // NULL size_t
-#include <stdarg.h> // va_list va_start va_end 
+#include <stdarg.h> // va_list va_start va_end
 #include <stdlib.h> // malloc(3) setenv(3) clearenv(3) setproctitle(3) getprogname(3)
 #include <stdio.h>  // vsnprintf(3) snprintf(3)
 #include <string.h> // strlen(3) strdup(3) memset(3) memcpy(3)
@@ -40,14 +40,20 @@
 #include <unistd.h>    /* freebsd setproctitle(3) */
 
 #if !defined(HAVE_SETPROCTITLE)
-#define HAVE_SETPROCTITLE (defined __NetBSD__ || defined __FreeBSD__ || defined __OpenBSD__)
+#if (defined __NetBSD__ || defined __FreeBSD__ || defined __OpenBSD__)
+#define HAVE_SETPROCTITLE 1
+#else
+#define HAVE_SETPROCTITLE 0
+#endif
 #endif
 
 
 #if HAVE_SETPROCTITLE
 #define HAVE_SETPROCTITLE_REPLACEMENT 0
+#elif (defined __linux || defined __APPLE__)
+#define HAVE_SETPROCTITLE_REPLACEMENT 1
 #else
-#define HAVE_SETPROCTITLE_REPLACEMENT (defined __linux || defined __APPLE__)
+#define HAVE_SETPROCTITLE_REPLACEMENT 0
 #endif
 
 
@@ -80,7 +86,7 @@ static struct {
 
 
 #ifndef SPT_MIN
-#define SPT_MIN(a, b) (((a) < (b))? (a) : (b))   
+#define SPT_MIN(a, b) (((a) < (b))? (a) : (b))
 #endif
 
 
@@ -134,10 +140,10 @@ static char **spt_find_argv_from_env(int argc, char *arg0) {
     return buf;
 }
 
-  
+
 static int spt_init1() {
-  // Store a pointer to the first enviroment variable since go
-  // will overwrite enviroment.
+  // Store a pointer to the first environment variable since go
+  // will overwrite environment.
   SPT.env0 = environ[0];
 
   return 2;
