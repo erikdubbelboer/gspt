@@ -41,3 +41,21 @@ func TestSetProcTitle(t *testing.T) {
 		t.FailNow()
 	}
 }
+
+func TestSetProcTitleFast(t *testing.T) {
+	if HaveSetProcTitleFast == HaveNone {
+		t.SkipNow()
+	}
+
+	title := randomMD5()
+
+	SetProcTitleFast(title)
+
+	out, err := exec.Command("/bin/ps", "ax").Output()
+	if err != nil {
+		// No ps available on this platform.
+		t.SkipNow()
+	} else if !strings.Contains(string(out), title) {
+		t.FailNow()
+	}
+}
