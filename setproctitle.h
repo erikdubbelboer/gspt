@@ -36,14 +36,21 @@
 #include <stdio.h>  // vsnprintf(3) snprintf(3)
 #include <string.h> // strlen(3) strdup(3) memset(3) memcpy(3)
 #include <errno.h>  /* program_invocation_name program_invocation_short_name */
+#include <sys/param.h> /* os versions */
 #include <sys/types.h> /* freebsd setproctitle(3) */
 #include <unistd.h>    /* freebsd setproctitle(3) */
 
 #if !defined(HAVE_SETPROCTITLE)
-#if (defined __NetBSD__ || defined __FreeBSD__ || defined __OpenBSD__)
+#if (__NetBSD__ || __FreeBSD__ || __OpenBSD__)
 #define HAVE_SETPROCTITLE 1
+#if (__FreeBSD__ && __FreeBSD_version > 1200000)
+#define HAVE_SETPROCTITLE_FAST 1
+#else
+#define HAVE_SETPROCTITLE_FAST 0
+#endif
 #else
 #define HAVE_SETPROCTITLE 0
+#define HAVE_SETPROCTITLE_FAST 0
 #endif
 #endif
 
@@ -147,6 +154,10 @@ static int spt_init1() {
   SPT.env0 = environ[0];
 
   return 2;
+}
+
+static int spt_fast_init1() {
+  return 0;
 }
 
 
@@ -257,6 +268,14 @@ static int spt_init1() {
 #endif
 }
 
+static int spt_fast_init1() {
+#if HAVE_SETPROCTITLE_FAST
+  return 1;
+#else
+  return 0;
+#endif
+}
+
 static void spt_init2(int argc, char *arg0) {
   (void)argc;
   (void)arg0;
@@ -269,6 +288,14 @@ static void spt_init2(int argc, char *arg0) {
 static void spt_setproctitle(const char *title) {
 #if HAVE_SETPROCTITLE || HAVE_SETPROCTITLE_REPLACEMENT
   setproctitle("%s", title);
+#else
+  (void)title;
+#endif
+}
+
+static void spt_setproctitle_fast(const char *title) {
+#if HAVE_SETPROCTITLE_FAST
+  setproctitle_fast("%s", title);
 #else
   (void)title;
 #endif

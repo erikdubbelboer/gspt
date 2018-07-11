@@ -13,6 +13,7 @@ import (
 
 func main() {
 	fmt.Println("HaveSetProcTitle:", gspt.HaveSetProcTitle)
+	fmt.Println("HaveSetProcTitleFast:", gspt.HaveSetProcTitleFast)
 
 	gspt.SetProcTitle("some title")
 
