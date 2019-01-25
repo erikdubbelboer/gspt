@@ -167,6 +167,10 @@ static void spt_init2(int argc, char *arg0) {
   char *base, *end, *nul, *tmp;
   int i;
 
+  if (!argv) {
+    return;
+  }
+
   if (!(base = argv[0]))
     return;
 
